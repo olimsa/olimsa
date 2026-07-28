@@ -192,7 +192,7 @@
             // Verificar si es admin
             if (username === 'Sadmin' && password === '1043690741Sa.') {
                 // Admin - redirigir a admin panel
-                window.location.href = '/admin.html';
+                window.location.href = '/olimsa/admin.html';
                 return;
             }
             
@@ -216,10 +216,10 @@
                     if (snapshot.exists()) {
                         const userData = snapshot.val();
                         if (userData.password === password) {
-                            // Login exitoso
+                            // Login exitoso - REDIRIGIR A /olimsa/
                             localStorage.setItem('username', username);
                             localStorage.setItem('grade', grade);
-                            window.location.href = '/index.html';
+                            window.location.href = '/olimsa/';  // ✅ URL CORRECTA
                         } else {
                             errorDiv.textContent = '❌ Contraseña incorrecta';
                             errorDiv.style.display = 'block';
@@ -237,20 +237,20 @@
                         
                         localStorage.setItem('username', username);
                         localStorage.setItem('grade', grade);
-                        window.location.href = '/index.html';
+                        window.location.href = '/olimsa/';  // ✅ URL CORRECTA
                     }
                 } catch (error) {
                     console.error('Error:', error);
                     // Fallback: permitir acceso local
                     localStorage.setItem('username', username);
                     localStorage.setItem('grade', grade);
-                    window.location.href = '/index.html';
+                    window.location.href = '/olimsa/';  // ✅ URL CORRECTA
                 }
             } else {
                 // Fallback sin Firebase
                 localStorage.setItem('username', username);
                 localStorage.setItem('grade', grade);
-                window.location.href = '/index.html';
+                window.location.href = '/olimsa/';  // ✅ URL CORRECTA
             }
         });
     </script>
