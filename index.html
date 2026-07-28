@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📐 Olimpiadas Matemáticas - Entrenador</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: linear-gradient(145deg, #f5f7fa 0%, #e6ecf5 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 820px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 48px;
+      padding: 30px 35px 40px;
+      box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: 0.2s;
+    }
+
+    h1 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1a2639;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    h1 small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #4a5b6e;
+      margin-left: 6px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px 12px;
+      background: #f0f4fe;
+      padding: 14px 20px;
+      border-radius: 60px;
+      margin-bottom: 28px;
+    }
+
+    .grade-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      color: #1f2a3e;
+    }
+    .grade-selector select {
+      padding: 8px 18px 8px 16px;
+      border-radius: 40px;
+      border: none;
+      background: white;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      cursor: pointer;
+      outline: 2px solid transparent;
+      transition: 0.15s;
+    }
+    .grade-selector select:focus {
+      outline-color: #3b6eff;
+    }
+
+    .stats {
+      display: flex;
+      gap: 24px;
+      font-weight: 500;
+      color: #1f2a3e;
+    }
+    .stats span {
+      background: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stats .correct { color: #0a7e3c; }
+    .stats .wrong { color: #b13e3e; }
+
+    .question-box {
+      background: white;
+      border-radius: 32px;
+      padding: 30px 28px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 20, 40, 0.06);
+    }
+
+    .question-text {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #0b1a2b;
+      line-height: 1.4;
+      margin-bottom: 24px;
+      min-height: 4rem;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .option-btn {
+      background: #f8faff;
+      border: 2px solid #e2e9f5;
+      border-radius: 60px;
+      padding: 14px 18px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #1a2b3e;
+      cursor: pointer;
+      transition: all 0.12s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .option-btn:hover:not(.disabled) {
+      background: #eaf0ff;
+      border-color: #8aa8ff;
+      transform: scale(1.01);
+    }
+    .option-btn .letter {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: #dce5f5;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      font-weight: 700;
+      color: #1d2e44;
+      margin-right: 6px;
+    }
+    .option-btn.correct-answer {
+      background: #c8f0d6;
+      border-color: #1e8b4c;
+      color: #0a4a26;
+    }
+    .option-btn.wrong-answer {
+      background: #fad6d6;
+      border-color: #b13e3e;
+      color: #791f1f;
+    }
+    .option-btn.disabled {
+      cursor: default;
+      opacity: 0.75;
+    }
+    .option-btn.selected-wrong {
+      background: #fad6d6;
+      border-color: #b13e3e;
+    }
+    .option-btn.selected-correct {
+      background: #c8f0d6;
+      border-color: #1e8b4c;
+    }
+
+    .feedback-area {
+      margin-top: 20px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .feedback-area.success {
+      background: #e2f7e9;
+      color: #0b5e30;
+    }
+    .feedback-area.error {
+      background: #fde8e8;
+      color: #9f2f2f;
+    }
+    .feedback-area .explanation {
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: #2b4058;
+      margin-left: 6px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      background: white;
+      color: #1a2b3e;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid #dce3ef;
+    }
+    .btn-primary {
+      background: #1f3a6b;
+      border-color: #1f3a6b;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #14305a;
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(31, 58, 107, 0.25);
+    }
+    .btn-secondary {
+      background: #eef3fc;
+      border-color: #c4d2e8;
+    }
+    .btn-secondary:hover {
+      background: #e2ebf9;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-reset {
+      background: transparent;
+      border-color: transparent;
+      color: #5a6f88;
+      font-weight: 500;
+      padding: 10px 18px;
+    }
+    .btn-reset:hover {
+      background: #f0f4fe;
+      border-color: #c4d2e8;
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      color: #5b6f88;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 1px solid #dce5f0;
+      padding-top: 22px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 20px; }
+      h1 { font-size: 1.8rem; }
+      .question-text { font-size: 1.3rem; }
+      .options-grid { grid-template-columns: 1fr; }
+      .top-bar { flex-direction: column; align-items: stretch; }
+      .stats { justify-content: space-around; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <h1>
+    🧠 Olimpiadas
+    <small>entrenador</small>
+  </h1>
+
+  <div class="top-bar">
+    <div class="grade-selector">
+      <label for="gradeSelect">📚 Grado</label>
+      <select id="gradeSelect">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7" selected>7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+    </div>
+    <div class="stats">
+      <span>✅ <span class="correct" id="correctCount">0</span></span>
+      <span>❌ <span class="wrong" id="wrongCount">0</span></span>
+    </div>
+  </div>
+
+  <div class="question-box">
+    <div class="question-text" id="questionText">Haz clic en "Generar" para empezar</div>
+
+    <div class="options-grid" id="optionsContainer">
+      <button class="option-btn disabled" data-index="0"><span class="letter">A</span> —</button>
+      <button class="option-btn disabled" data-index="1"><span class="letter">B</span> —</button>
+      <button class="option-btn disabled" data-index="2"><span class="letter">C</span> —</button>
+      <button class="option-btn disabled" data-index="3"><span class="letter">D</span> —</button>
+    </div>
+
+    <div class="feedback-area" id="feedbackArea">💡 Elige una opción para comprobar</div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn btn-primary" id="generateBtn">🔄 Generar pregunta</button>
+    <button class="btn btn-secondary" id="resetStatsBtn">⟲ Reiniciar puntuación</button>
+  </div>
+
+  <div class="footer-note">
+    <span>📐 Preguntas adaptadas al grado</span>
+    <span>⚡ Cada pregunta es única</span>
+    <span>🏆 ¡Practica para la olimpiada!</span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- DOM refs ----------
+    const gradeSelect = document.getElementById('gradeSelect');
+    const questionText = document.getElementById('questionText');
+    const optionsBtns = document.querySelectorAll('.option-btn');
+    const feedbackArea = document.getElementById('feedbackArea');
+    const correctSpan = document.getElementById('correctCount');
+    const wrongSpan = document.getElementById('wrongCount');
+    const generateBtn = document.getElementById('generateBtn');
+    const resetStatsBtn = document.getElementById('resetStatsBtn');
+
+    // ---------- State ----------
+    let currentQuestion = null;          // { text, options, correctIndex, explanation? }
+    let answered = false;
+    let correctCount = 0;
+    let wrongCount = 0;
+    let currentGrade = 7;               // default
+
+    // ---------- Helper: random int ----------
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // ---------- Generadores de preguntas según grado ----------
+    function generateQuestion(grade) {
+      // Elegir un tipo de problema entre varios
+      const types = ['arithmetic', 'algebra', 'word', 'sequence', 'geometry'];
+      // Según grado, ajustar probabilidades o quitar tipos muy complejos
+      let available = [...types];
+      if (grade < 4) available = ['arithmetic', 'word']; // menos álgebra
+      if (grade < 2) available = ['arithmetic']; // solo operaciones básicas
+
+      const type = available[rand(0, available.length - 1)];
+
+      switch (type) {
+        case 'arithmetic': return generateArithmetic(grade);
+        case 'algebra': return generateAlgebra(grade);
+        case 'word': return generateWordProblem(grade);
+        case 'sequence': return generateSequence(grade);
+        case 'geometry': return generateGeometry(grade);
+        default: return generateArithmetic(grade);
+      }
+    }
+
+    // ---------- Aritmética ----------
+    function generateArithmetic(grade) {
+      let maxNum = 10 + grade * 4;
+      if (grade > 8) maxNum = 50 + grade * 8;
+      const ops = ['+', '-', '×', '÷'];
+      let op = ops[rand(0, ops.length - 1)];
+
+      // Para grados bajos, limitar operaciones
+      if (grade < 3) op = rand(0,1) === 0 ? '+' : '-';
+      if (grade < 5 && (op === '×' || op === '÷')) op = '+';
+
+      let a, b, result, display, correctAnswer;
+
+      switch (op) {
+        case '+':
+          a = rand(1, maxNum);
+          b = rand(1, maxNum);
+          result = a + b;
+          display = `${a} + ${b} = ?`;
+          correctAnswer = result;
+          break;
+        case '-':
+          a = rand(1, maxNum);
+          b = rand(1, a); // asegurar no negativo
+          result = a - b;
+          display = `${a} - ${b} = ?`;
+          correctAnswer = result;
+          break;
+        case '×':
+          a = rand(1, Math.min(12, maxNum/2));
+          b = rand(1, Math.min(12, maxNum/2));
+          result = a * b;
+          display = `${a} × ${b} = ?`;
+          correctAnswer = result;
+          break;
+        case '÷':
+          b = rand(1, Math.min(12, maxNum/3));
+          result = rand(1, Math.min(12, maxNum/3));
+          a = b * result;
+          display = `${a} ÷ ${b} = ?`;
+          correctAnswer = result;
+          break;
+        default: break;
+      }
+
+      // Generar opciones (incluyendo correcta)
+      const options = generateOptions(correctAnswer, grade);
+      return {
+        text: display,
+        options: options,
+        correctIndex: options.indexOf(correctAnswer),
+        explanation: `El resultado es ${correctAnswer}.`
+      };
+    }
+
+    // ---------- Álgebra (ecuaciones simples) ----------
+    function generateAlgebra(grade) {
+      let maxCoeff = Math.min(10 + grade, 25);
+      if (grade < 5) maxCoeff = 8;
+      let x = rand(1, 12 + grade);
+      let a = rand(1, maxCoeff);
+      let b = rand(1, maxCoeff);
+      // ecuación: a*x + b = c   =>  x = (c - b)/a
+      let c = a * x + b;
+      let display = `${a}x + ${b} = ${c}`;
+      let correctAnswer = x;
+
+      // para grados más altos, usar también a*x - b = c
+      if (grade > 6 && rand(0,1)===0) {
+        b = rand(1, maxCoeff);
+        c = a * x - b;
+        display = `${a}x - ${b} = ${c}`;
+        correctAnswer = x;
+      }
+
+      const options = generateOptions(correctAnswer, grade);
+      return {
+        text: `Resuelve: ${display}`,
+        options: options,
+        correctIndex: options.indexOf(correctAnswer),
+        explanation: `x = ${correctAnswer}.`
+      };
+    }
+
+    // ---------- Problemas de palabras ----------
+    function generateWordProblem(grade) {
+      const scenarios = [
+        { base: 'María tiene {a} manzanas y su hermano le da {b} más. ¿Cuántas tiene ahora?', op: 'add' },
+        { base: 'Un tren recorre {a} km en {b} horas. ¿Cuál es su velocidad media (km/h)?', op: 'div' },
+        { base: 'En una caja hay {a} caramelos. Se reparten entre {b} niños. ¿Cuántos caramelos recibe cada uno?', op: 'div' },
+        { base: 'Un rectángulo mide {a} cm de largo y {b} cm de ancho. ¿Cuál es su área?', op: 'mul' },
+        { base: 'Si un número se multiplica por {a} se obtiene {c}. ¿Cuál es el número?', op: 'div' },
+      ];
+
+      let s = scenarios[rand(0, scenarios.length - 1)];
+      let a, b, c, correctAnswer, display;
+
+      const maxVal = 10 + grade * 3;
+
+      switch (s.op) {
+        case 'add':
+          a = rand(1, maxVal);
+          b = rand(1, maxVal);
+          correctAnswer = a + b;
+          display = s.base.replace('{a}', a).replace('{b}', b);
+          break;
+        case 'div':
+          a = rand(1, maxVal);
+          b = rand(1, Math.min(10, maxVal));
+          // Asegurar divisible si es posible
+          if (grade < 4) {
+            a = b * rand(1, 8);
+          }
+          correctAnswer = a / b;
+          if (!Number.isInteger(correctAnswer)) {
+            // forzar entero para opciones
+            a = b * rand(1, 10);
+            correctAnswer = a / b;
+          }
+          display = s.base.replace('{a}', a).replace('{b}', b);
+          break;
+        case 'mul':
+          a = rand(1, Math.min(12, maxVal/2));
+          b = rand(1, Math.min(12, maxVal/2));
+          correctAnswer = a * b;
+          display = s.base.replace('{a}', a).replace('{b}', b);
+          break;
+        default:
+          a = rand(1, 10);
+          b = rand(1, 10);
+          c = a * b;
+          correctAnswer = b;
+          display = s.base.replace('{a}', a).replace('{c}', c);
+          break;
+      }
+
+      const options = generateOptions(correctAnswer, grade);
+      return {
+        text: display,
+        options: options,
+        correctIndex: options.indexOf(correctAnswer),
+        explanation: `Respuesta: ${correctAnswer}.`
+      };
+    }
+
+    // ---------- Secuencias ----------
+    function generateSequence(grade) {
+      let diff = rand(1, Math.min(5 + grade, 15));
+      let first = rand(1, 20 + grade);
+      let length = 4 + rand(0,2);
+      let seq = [];
+      for (let i = 0; i < length; i++) {
+        seq.push(first + i * diff);
+      }
+      let missingIndex = rand(0, length-1);
+      let correctAnswer = seq[missingIndex];
+      let displaySeq = seq.map((v, idx) => idx === missingIndex ? '?' : v).join(', ');
+      let display = `Encuentra el número que falta: ${displaySeq}`;
+
+      const options = generateOptions(correctAnswer, grade);
+      return {
+        text: display,
+        options: options,
+        correctIndex: options.indexOf(correctAnswer),
+        explanation: `La secuencia suma ${diff}, el valor faltante es ${correctAnswer}.`
+      };
+    }
+
+    // ---------- Geometría (área/perímetro) ----------
+    function generateGeometry(grade) {
+      let a = rand(2, 8 + grade);
+      let b = rand(2, 8 + grade);
+      let shape = rand(0,1) === 0 ? 'rect' : 'triang';
+      let correctAnswer, display;
+
+      if (shape === 'rect') {
+        // área de rectángulo
+        correctAnswer = a * b;
+        display = `Calcula el área de un rectángulo de ${a} cm × ${b} cm.`;
+      } else {
+        // área de triángulo (base * altura / 2)
+        let base = a;
+        let altura = b;
+        correctAnswer = (base * altura) / 2;
+        if (!Number.isInteger(correctAnswer)) correctAnswer = Math.round(correctAnswer * 10) / 10; // decimal
+        display = `Calcula el área de un triángulo con base ${base} cm y altura ${altura} cm.`;
+      }
+
+      const options = generateOptions(correctAnswer, grade);
+      return {
+        text: display,
+        options: options,
+        correctIndex: options.indexOf(correctAnswer),
+        explanation: `El área es ${correctAnswer}.`
+      };
+    }
+
+    // ---------- Generar opciones (3 distractores) ----------
+    function generateOptions(correct, grade) {
+      let opts = new Set();
+      opts.add(correct);
+      let attempts = 0;
+      const maxAttempts = 100;
+
+      while (opts.size < 4 && attempts < maxAttempts) {
+        attempts++;
+        let offset;
+        if (typeof correct === 'number') {
+          if (Number.isInteger(correct)) {
+            let range = Math.max(3, Math.abs(correct) * 0.3 + 2);
+            offset = rand(-Math.ceil(range), Math.ceil(range));
+            if (offset === 0) offset = rand(1, 3) * (rand(0,1) ? 1 : -1);
+          } else {
+            // decimal
+            let range = Math.max(0.5, Math.abs(correct) * 0.2);
+            offset = (Math.random() * range * 2 - range);
+            offset = Math.round(offset * 10) / 10;
+            if (offset === 0) offset = 0.5;
+          }
+        } else {
+          // si es string, convertir a número
+          let num = parseFloat(correct);
+          if (!isNaN(num)) {
+            let range = Math.max(2, Math.abs(num) * 0.3);
+            offset = rand(-Math.ceil(range), Math.ceil(range));
+            if (offset === 0) offset = rand(1,3) * (rand(0,1) ? 1 : -1);
+          } else {
+            offset = rand(-3, 3);
+            if (offset === 0) offset = 1;
+          }
+        }
+        let candidate;
+        if (typeof correct === 'number') {
+          candidate = correct + offset;
+          // Redondear para evitar muchos decimales
+          if (!Number.isInteger(correct)) candidate = Math.round(candidate * 10) / 10;
+        } else {
+          // para no numérico, solo añadir un número cercano
+          candidate = correct + offset;
+        }
+        // evitar negativos si el correcto es positivo y grado bajo
+        if (grade < 3 && correct > 0 && candidate < 0) continue;
+        if (candidate !== correct && !isNaN(candidate) && candidate > -100 && candidate < 1000) {
+          opts.add(candidate);
+        }
+      }
+
+      // si no se llenaron, rellenar con números aleatorios
+      while (opts.size < 4) {
+        let filler = rand(1, 30);
+        if (!opts.has(filler)) opts.add(filler);
+      }
+
+      // convertir a array y mezclar
+      let arr = Array.from(opts);
+      shuffle(arr);
+      return arr;
+    }
+
+    // ---------- Utils ----------
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // ---------- Mostrar pregunta en UI ----------
+    function displayQuestion(q) {
+      questionText.textContent = q.text;
+      const letters = ['A', 'B', 'C', 'D'];
+      optionsBtns.forEach((btn, idx) => {
+        btn.innerHTML = `<span class="letter">${letters[idx]}</span> ${q.options[idx]}`;
+        btn.className = 'option-btn';
+        btn.dataset.correct = (idx === q.correctIndex) ? 'true' : 'false';
+        btn.dataset.selected = 'false';
+        btn.disabled = false;
+      });
+      feedbackArea.className = 'feedback-area';
+      feedbackArea.innerHTML = '💡 Elige una opción';
+      answered = false;
+      currentQuestion = q;
+    }
+
+    // ---------- Manejar respuesta ----------
+    function handleOptionClick(e) {
+      const btn = e.currentTarget;
+      if (btn.disabled || answered) return;
+      const selectedIndex = parseInt(btn.dataset.index);
+      const isCorrect = btn.dataset.correct === 'true';
+
+      // Deshabilitar todos
+      optionsBtns.forEach(b => { b.disabled = true; b.classList.add('disabled'); });
+
+      // Marcar la correcta
+      optionsBtns.forEach(b => {
+        if (b.dataset.correct === 'true') b.classList.add('correct-answer');
+      });
+
+      if (isCorrect) {
+        btn.classList.add('selected-correct');
+        feedbackArea.className = 'feedback-area success';
+        feedbackArea.innerHTML = `✅ ¡Correcto! ${currentQuestion.explanation || ''}`;
+        correctCount++;
+      } else {
+        btn.classList.add('selected-wrong');
+        feedbackArea.className = 'feedback-area error';
+        feedbackArea.innerHTML = `❌ Incorrecto. ${currentQuestion.explanation || ''}`;
+        wrongCount++;
+      }
+
+      answered = true;
+      updateStats();
+    }
+
+    // ---------- Actualizar contadores ----------
+    function updateStats() {
+      correctSpan.textContent = correctCount;
+      wrongSpan.textContent = wrongCount;
+    }
+
+    // ---------- Resetear estadísticas ----------
+    function resetStats() {
+      correctCount = 0;
+      wrongCount = 0;
+      updateStats();
+      // Limpiar feedback
+      feedbackArea.className = 'feedback-area';
+      feedbackArea.innerHTML = '📊 Puntuación reiniciada';
+      // Resetear opciones
+      optionsBtns.forEach(b => {
+        b.disabled = true;
+        b.classList.add('disabled');
+        b.className = 'option-btn disabled';
+        b.innerHTML = `<span class="letter">${['A','B','C','D'][parseInt(b.dataset.index)]}</span> —`;
+      });
+      questionText.textContent = 'Haz clic en "Generar" para empezar';
+      currentQuestion = null;
+      answered = false;
+    }
+
+    // ---------- Generar nueva pregunta ----------
+    function generateNewQuestion() {
+      const grade = parseInt(gradeSelect.value);
+      currentGrade = grade;
+      const q = generateQuestion(grade);
+      displayQuestion(q);
+      // Asegurar que los botones tengan su índice
+      optionsBtns.forEach((btn, idx) => btn.dataset.index = idx);
+      // Asignar event listeners (una vez)
+      if (!optionsBtns[0]._listenerAttached) {
+        optionsBtns.forEach(btn => {
+          btn.addEventListener('click', handleOptionClick);
+          btn._listenerAttached = true;
+        });
+      }
+    }
+
+    // ---------- Init ----------
+    function init() {
+      resetStats();
+      // Generar primera pregunta
+      generateNewQuestion();
+
+      // Eventos
+      generateBtn.addEventListener('click', generateNewQuestion);
+      resetStatsBtn.addEventListener('click', resetStats);
+      gradeSelect.addEventListener('change', generateNewQuestion);
+    }
+
+    init();
+  })();
+</script>
+</body>
+</html>
