@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 Panel de Administración</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .admin-header h1 {
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logout-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .logout-btn:hover {
+            background: #c53030;
+            transform: scale(1.05);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .stat-card .label {
+            color: #718096;
+            margin-top: 5px;
+        }
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .users-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .users-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .users-table tr:hover {
+            background: #f7fafc;
+        }
+        .btn-delete {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-delete:hover {
+            background: #c53030;
+        }
+        .search-box {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .btn-action {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c53030;
+        }
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #38a169;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>👑 Panel de Administración</h1>
+            <button class="logout-btn" onclick="logout()">🚪 Cerrar sesión</button>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="number" id="totalUsers">0</div>
+                <div class="label">Total de usuarios</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="totalGames">0</div>
+                <div class="label">Partidas jugadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="topScore">0</div>
+                <div class="label">Puntuación más alta</div>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Buscar usuario...">
+            <button class="btn-action btn-danger" onclick="deleteAllUsers()">🗑️ Eliminar todos los usuarios</button>
+            <button class="btn-action btn-success" onclick="exportData()">📥 Exportar datos</button>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Usuario</th>
+                        <th>Grado</th>
+                        <th>Puntuación</th>
+                        <th>Partidas</th>
+                        <th>Último juego</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr><td colspan="7" style="text-align: center; padding: 30px; color: #a0aec0;">Cargando usuarios...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7nXyQzJkNvP5nqVzSgRwTqLm9Xp2Y3fA",
+            authDomain: "olimpiadas-mate.firebaseapp.com",
+            databaseURL: "https://olimpiadas-mate-default-rtdb.firebaseio.com",
+            projectId: "olimpiadas-mate",
+            storageBucket: "olimpiadas-mate.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        const script = document.createElement('script');
+        script.src = "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
+        document.head.appendChild(script);
+
+        const scriptDb = document.createElement('script');
+        scriptDb.src = "https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js";
+        document.head.appendChild(scriptDb);
+
+        let firebaseInitialized = false;
+
+        script.onload = function() {
+            scriptDb.onload = function() {
+                if (typeof firebase !== 'undefined') {
+                    firebase.initializeApp(firebaseConfig);
+                    firebaseInitialized = true;
+                    loadUsers();
+                }
+            };
+        };
+
+        async function loadUsers() {
+            if (!firebaseInitialized) return;
+
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref('usuarios').once('value');
+                
+                if (!snapshot.exists()) {
+                    document.getElementById('usersTableBody').innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px; color: #a0aec0;">No hay usuarios registrados</td></tr>';
+                    return;
+                }
+
+                const users = snapshot.val();
+                const userList = Object.entries(users)
+                    .filter(([key, user]) => user.username && user.username !== 'Sadmin')
+                    .map(([key, user]) => ({ ...user, key }))
+                    .sort((a, b) => (b.score || 0) - (a.score || 0));
+
+                // Actualizar estadísticas
+                document.getElementById('totalUsers').textContent = userList.length;
+                document.getElementById('totalGames').textContent = userList.reduce((sum, u) => sum + (u.gamesPlayed || 0), 0);
+                document.getElementById('topScore').textContent = userList.length > 0 ? userList[0].score || 0 : 0;
+
+                // Renderizar tabla
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = userList.map((user, index) => `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${user.username}</td>
+                        <td>${user.grade || 'N/A'}</td>
+                        <td>${user.score || 0}</td>
+                        <td>${user.gamesPlayed || 0}</td>
+                        <td>${user.lastPlayed ? new Date(user.lastPlayed).toLocaleDateString() : 'Nunca'}</td>
+                        <td>
+                            <button class="btn-delete" onclick="deleteUser('${user.key}')">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error cargando usuarios:', error);
+            }
+        }
+
+        async function deleteUser(key) {
+            if (!confirm('¿Estás seguro de eliminar este usuario?')) return;
+            if (!firebaseInitialized) return;
+
+            try {
+                const db = firebase.database();
+                await db.ref('usuarios/' + key).remove();
+                loadUsers();
+            } catch (error) {
+                console.error('Error eliminando usuario:', error);
+                alert('Error al eliminar usuario');
+            }
+        }
+
+        async function deleteAllUsers() {
+            if (!confirm('⚠️ ¿Estás seguro de eliminar TODOS los usuarios? Esta acción no se puede deshacer.')) return;
+            if (!firebaseInitialized) return;
+
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref('usuarios').once('value');
+                const users = snapshot.val();
+                
+                for (let key in users) {
+                    if (users[key].username !== 'Sadmin') {
+                        await db.ref('usuarios/' + key).remove();
+                    }
+                }
+                loadUsers();
+                alert('Todos los usuarios eliminados');
+            } catch (error) {
+                console.error('Error eliminando usuarios:', error);
+                alert('Error al eliminar usuarios');
+            }
+        }
+
+        function exportData() {
+            if (!firebaseInitialized) {
+                alert('Firebase no está inicializado');
+                return;
+            }
+
+            const db = firebase.database();
+            db.ref('usuarios').once('value')
+                .then(snapshot => {
+                    const data = snapshot.val();
+                    const json = JSON.stringify(data, null, 2);
+                    const blob = new Blob([json], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `usuarios_${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    console.error('Error exportando datos:', error);
+                    alert('Error al exportar datos');
+                });
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '/home/';
+        }
+
+        // Búsqueda en tiempo real
+        document.getElementById('searchBox').addEventListener('input', function() {
+            const search = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
+        });
+
+        // Cargar usuarios periódicamente
+        setInterval(loadUsers, 30000);
+    </script>
+</body>
+</html>
