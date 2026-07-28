@@ -1,1 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Olimpiadas Matemáticas - Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-container h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .login-container .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+        .password-hint {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .header-logo {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="header-logo">📐</div>
+        <h1>Olimpiadas Matemáticas</h1>
+        <p class="subtitle">Entrenamiento interactivo</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">👤 Nombre de usuario</label>
+                <input type="text" id="username" placeholder="Ingresa tu nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">🔒 Contraseña</label>
+                <input type="password" id="password" placeholder="Mínimo 8 caracteres, mayúscula, minúscula y punto" required>
+                <div class="password-hint">🔑 Mínimo 8 caracteres, una mayúscula, una minúscula y un punto (.)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="grade">📚 Grado escolar</label>
+                <select id="grade" required>
+                    <option value="">Selecciona tu grado</option>
+                    <option value="1">1° Primaria</option>
+                    <option value="2">2° Primaria</option>
+                    <option value="3">3° Primaria</option>
+                    <option value="4">4° Primaria</option>
+                    <option value="5">5° Primaria</option>
+                    <option value="6">6° Primaria</option>
+                    <option value="7">1° Secundaria</option>
+                    <option value="8">2° Secundaria</option>
+                    <option value="9">3° Secundaria</option>
+                    <option value="10">1° Preparatoria</option>
+                    <option value="11">2° Preparatoria</option>
+                    <option value="12">3° Preparatoria</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn-login">🚀 Comenzar entrenamiento</button>
+            
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: #a0aec0;">
+            <p>👑 Admin: Sadmin</p>
+        </div>
+    </div>
 
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7nXyQzJkNvP5nqVzSgRwTqLm9Xp2Y3fA",
+            authDomain: "olimpiadas-mate.firebaseapp.com",
+            databaseURL: "https://olimpiadas-mate-default-rtdb.firebaseio.com",
+            projectId: "olimpiadas-mate",
+            storageBucket: "olimpiadas-mate.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456"
+        };
+
+        // Inicializar Firebase (cargar desde CDN)
+        const script = document.createElement('script');
+        script.src = "https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js";
+        document.head.appendChild(script);
+
+        const scriptDb = document.createElement('script');
+        scriptDb.src = "https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js";
+        document.head.appendChild(scriptDb);
+
+        let firebaseInitialized = false;
+
+        script.onload = function() {
+            scriptDb.onload = function() {
+                if (typeof firebase !== 'undefined') {
+                    firebase.initializeApp(firebaseConfig);
+                    firebaseInitialized = true;
+                    console.log('Firebase inicializado');
+                }
+            };
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const grade = document.getElementById('grade').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Validar campos
+            if (!username || !password || !grade) {
+                errorDiv.textContent = '⚠️ Por favor, completa todos los campos';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Verificar si es admin
+            if (username === 'Sadmin' && password === '1043690741Sa.') {
+                // Admin - redirigir a admin panel
+                window.location.href = '/admin.html';
+                return;
+            }
+            
+            // Validar contraseña para estudiantes
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\.).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                errorDiv.textContent = '❌ La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un punto (.)';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Guardar en Firebase
+            if (firebaseInitialized) {
+                try {
+                    const db = firebase.database();
+                    const userRef = db.ref('usuarios/' + username);
+                    
+                    // Verificar si usuario existe
+                    const snapshot = await userRef.once('value');
+                    
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.password === password) {
+                            // Login exitoso
+                            localStorage.setItem('username', username);
+                            localStorage.setItem('grade', grade);
+                            window.location.href = '/index.html';
+                        } else {
+                            errorDiv.textContent = '❌ Contraseña incorrecta';
+                            errorDiv.style.display = 'block';
+                        }
+                    } else {
+                        // Registrar nuevo usuario
+                        await userRef.set({
+                            username: username,
+                            password: password,
+                            grade: grade,
+                            score: 0,
+                            gamesPlayed: 0,
+                            createdAt: Date.now()
+                        });
+                        
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('grade', grade);
+                        window.location.href = '/index.html';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Fallback: permitir acceso local
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('grade', grade);
+                    window.location.href = '/index.html';
+                }
+            } else {
+                // Fallback sin Firebase
+                localStorage.setItem('username', username);
+                localStorage.setItem('grade', grade);
+                window.location.href = '/index.html';
+            }
+        });
+    </script>
+</body>
+</html>
