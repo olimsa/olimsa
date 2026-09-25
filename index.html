@@ -372,7 +372,7 @@
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                     <div style="font-size: 3rem; margin-bottom: 10px;">🤖</div>
                     <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Comenzar Examen con IA</h2>
-                    <p style="font-size: 0.95rem; opacity: 0.9;">Preguntas generadas por IA · 10 minutos · Calificación 1-5</p>
+                    <p style="font-size: 0.95rem; opacity: 0.9;">Preguntas generadas por Cerebras · 10 minutos · Calificación 1-5</p>
                 </div>
             </div>
             <div class="nav-row">
@@ -455,11 +455,11 @@
 
     <script>
         // ============================================================
-        // 🔑 API KEY DE DEEPSEEK
+        // 🔑 API KEY DE CEREBRAS
         // ============================================================
-        const DEEPSEEK_API_KEY = 'sk-0ea0f2cec48f459d978b59418b734869';
-        const DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions';
-        const DEEPSEEK_MODEL = 'deepseek-chat';
+        const CEREBRAS_API_KEY = 'TU_CEREBRAS_API_KEY_AQUI';
+        const CEREBRAS_URL = 'https://api.cerebras.ai/v1/chat/completions';
+        const CEREBRAS_MODEL = 'llama-3.3-70b';
 
         // ============================================================
         // CONFIGURACIÓN
@@ -648,7 +648,7 @@
         }
 
         // ============================================================
-        // 🤖 GENERACIÓN DE PREGUNTAS CON DEEPSEEK
+        // 🤖 GENERACIÓN DE PREGUNTAS CON CEREBRAS
         // ============================================================
         function pickRandomTopic() {
             const topics = selectedTopics.includes('Todos') ? TOPICS_BY_GRADE[selectedGrade] : selectedTopics;
@@ -685,35 +685,32 @@ Ejemplo para type "multiple":
 Ejemplo para type "open":
 {"text": "Resuelve: 3x + 7 = 22", "type": "open", "answer": "5", "explanation": "3x = 15, x = 5"}`;
 
-            const response = await fetch(DEEPSEEK_URL, {
+            const response = await fetch(CEREBRAS_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+                    'Authorization': `Bearer ${CEREBRAS_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: DEEPSEEK_MODEL,
+                    model: CEREBRAS_MODEL,
                     messages: [
                         { role: 'system', content: 'Eres un generador de preguntas de matemáticas. Respondes SOLO con JSON válido, sin markdown, sin texto adicional.' },
                         { role: 'user', content: prompt }
                     ],
                     temperature: 0.9,
-                    max_tokens: 500,
-                    response_format: { type: 'json_object' }
+                    max_tokens: 500
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`DeepSeek error ${response.status}`);
+                throw new Error(`Cerebras error ${response.status}`);
             }
 
             const data = await response.json();
             let contenido = data.choices[0].message.content.trim();
-            // Limpiar posibles ```json ... ```
             contenido = contenido.replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
             const q = JSON.parse(contenido);
 
-            // Validar
             if (!q.text || !q.type) throw new Error('JSON inválido');
 
             if (q.type === 'multiple') {
@@ -733,7 +730,6 @@ Ejemplo para type "open":
             const topic = pickRandomTopic();
             const type = Math.random() > 0.5 ? 'multiple' : 'open';
 
-            // Mostrar estado de carga
             document.getElementById('questionText').textContent = '🤖 Generando pregunta con IA...';
             document.getElementById('questionBadge').textContent = '🤖 IA';
             document.getElementById('questionBadge').className = 'question-badge ai';
@@ -741,7 +737,6 @@ Ejemplo para type "open":
             document.getElementById('feedback').className = 'feedback loading';
             document.getElementById('aiLoading').style.display = 'block';
 
-            // Ocultar botones
             document.getElementById('optionsContainer').style.display = 'none';
             document.getElementById('openAnswerContainer').style.display = 'none';
 
@@ -753,7 +748,6 @@ Ejemplo para type "open":
                 displayQuestion(q);
             } catch (err) {
                 console.error('Error IA:', err);
-                // Fallback: usar generador local
                 currentQuestion = generateLocalFallback(selectedGrade, topic, type);
                 answered = false;
                 document.getElementById('aiLoading').style.display = 'none';
@@ -863,10 +857,13 @@ Ejemplo para type "open":
             totalAnswered++;
             input.disabled = true;
 
-            // Comparar respuestas (normalizar)
             const normalize = (s) => String(s).replace(/\s/g, '').replace(/,/g, '.').toLowerCase();
-            const isCorrect = normalize(val) === normalize(currentQuestion.answer) ||
-                              Math.abs(parseFloat(val.replace(',', '.')) - parseFloat(currentQuestion.answer)) < 0.001;
+            let isCorrect = normalize(val) === normalize(currentQuestion.answer);
+            if (!isCorrect) {
+                const n1 = parseFloat(val.replace(',', '.'));
+                const n2 = parseFloat(currentQuestion.answer.replace(',', '.'));
+                if (!isNaN(n1) && !isNaN(n2) && Math.abs(n1 - n2) < 0.001) isCorrect = true;
+            }
 
             if (isCorrect) {
                 input.classList.add('correct');
@@ -925,27 +922,160 @@ Ejemplo para type "open":
         }
 
         // ============================================================
-        // FALLBACK LOCAL (por si la IA falla)
+        // FALLBACK LOCAL VARIADO
         // ============================================================
         function generateLocalFallback(grade, topic, type) {
             const t = (topic || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-            if (t.includes('factoriz')) {
+
+            if (t.includes('factoriz')) return factorizacionLocal(type);
+            if (t.includes('ecuaci')) return ecuacionLinealLocal(type);
+            if (t.includes('sistema')) return sistemaLocal(type);
+            if (t.includes('fracci')) return fraccionLocal(type);
+            if (t.includes('porcentaje')) return porcentajeLocal(type);
+            if (t.includes('area') || t.includes('geometr') || t.includes('perimetro') || t.includes('volumen')) return geometriaLocal(type);
+            if (t.includes('funcion')) return funcionLocal(type);
+            if (t.includes('cuadr')) return cuadraticaLocal(type);
+
+            return sumaRestaLocal(grade, type);
+        }
+
+        function factorizacionLocal(type) {
+            const subtipos = ['diferenciaCuadrados', 'tcp', 'simple', 'general'];
+            const sub = subtipos[Math.floor(Math.random() * subtipos.length)];
+            let text, answer;
+            if (sub === 'diferenciaCuadrados') {
+                const b = Math.floor(Math.random() * 8) + 2;
+                text = `Factoriza: x² - ${b*b}`;
+                answer = `(x + ${b})(x - ${b})`;
+            } else if (sub === 'tcp') {
+                const b = Math.floor(Math.random() * 8) + 2;
+                text = `Factoriza: x² + ${2*b}x + ${b*b}`;
+                answer = `(x + ${b})²`;
+            } else if (sub === 'simple') {
                 const p = Math.floor(Math.random() * 12) - 6 || 1;
                 const q = Math.floor(Math.random() * 12) - 6 || 2;
                 const b = p + q, c = p * q;
-                const text = `Factoriza: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)}`;
-                const answer = `(x ${p >= 0 ? '+' : '-'} ${Math.abs(p)})(x ${q >= 0 ? '+' : '-'} ${Math.abs(q)})`;
-                if (type === 'multiple') {
-                    const opts = [answer, `(x+1)(x+${c})`, `(x-2)(x-${c})`, `(x+${b})(x+1)`];
-                    return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
-                }
-                return { type: 'open', text: text + '\n(Escribe los factores)', answer, explanation: answer };
+                text = `Factoriza: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)}`;
+                answer = `(x ${p >= 0 ? '+' : '-'} ${Math.abs(p)})(x ${q >= 0 ? '+' : '-'} ${Math.abs(q)})`;
+            } else {
+                const a = Math.floor(Math.random() * 3) + 2;
+                const p = Math.floor(Math.random() * 5) + 1;
+                const q = Math.floor(Math.random() * 5) + 1;
+                const b = a * q + p, c = p * q;
+                text = `Factoriza: ${a}x² + ${b}x + ${c}`;
+                answer = `(${a}x + ${p})(x + ${q})`;
             }
-            // Fallback genérico
-            const a = Math.floor(Math.random() * 20) + 1;
-            const b = Math.floor(Math.random() * 20) + 1;
-            const answer = a + b;
-            const text = `${a} + ${b} = ?`;
+            if (type === 'multiple') {
+                const opts = [answer, `(x+1)(x+${Math.floor(Math.random()*9)+1})`, `(x-2)(x-${Math.floor(Math.random()*9)+1})`, `(x+${Math.floor(Math.random()*5)+1})(x+${Math.floor(Math.random()*5)+1})`];
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
+            }
+            return { type: 'open', text: text + '\n(Escribe los factores)', answer, explanation: answer };
+        }
+
+        function ecuacionLinealLocal(type) {
+            const x = Math.floor(Math.random() * 12) + 1;
+            const a = Math.floor(Math.random() * 8) + 1;
+            const b = Math.floor(Math.random() * 15);
+            const c = a * x + b;
+            const text = `Resuelve: ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)} = ${c}`;
+            if (type === 'multiple') {
+                const opts = [x, x+1, x-1, x+2].map(String);
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `x = ${x}` };
+            }
+            return { type: 'open', text, answer: String(x), explanation: `x = ${x}` };
+        }
+
+        function cuadraticaLocal(type) {
+            const r1 = Math.floor(Math.random() * 12) - 6 || 1;
+            const r2 = Math.floor(Math.random() * 12) - 6 || 2;
+            const b = -(r1 + r2), c = r1 * r2;
+            const text = `Resuelve: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)} = 0\n(Da las dos soluciones separadas por coma)`;
+            const answer = `${Math.min(r1,r2)}, ${Math.max(r1,r2)}`;
+            if (type === 'multiple') {
+                const opts = [answer, `${r1+1}, ${r2}`, `${r1}, ${r2+1}`, `${r1-1}, ${r2}`];
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
+            }
+            return { type: 'open', text, answer, explanation: answer };
+        }
+
+        function sistemaLocal(type) {
+            const x = Math.floor(Math.random() * 8) + 1;
+            const y = Math.floor(Math.random() * 8) + 1;
+            const a1 = Math.floor(Math.random() * 5) + 1, b1 = Math.floor(Math.random() * 5) + 1;
+            const a2 = Math.floor(Math.random() * 5) + 1, b2 = Math.floor(Math.random() * 5) + 1;
+            const c1 = a1 * x + b1 * y, c2 = a2 * x + b2 * y;
+            const text = `Resuelve:\n${a1}x + ${b1}y = ${c1}\n${a2}x + ${b2}y = ${c2}\n(Escribe "x,y")`;
+            const answer = `${x},${y}`;
+            if (type === 'multiple') {
+                const opts = [answer, `${x+1},${y}`, `${x},${y+1}`, `${x-1},${y}`];
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `x=${x}, y=${y}` };
+            }
+            return { type: 'open', text, answer, explanation: `x=${x}, y=${y}` };
+        }
+
+        function fraccionLocal(type) {
+            const a = Math.floor(Math.random() * 9) + 1;
+            const b = Math.floor(Math.random() * 9) + 2;
+            const c = Math.floor(Math.random() * 9) + 1;
+            const d = Math.floor(Math.random() * 9) + 2;
+            const num = a * d + c * b, den = b * d;
+            const text = `Suma: ${a}/${b} + ${c}/${d} = ?`;
+            const simplificar = (n, dn) => { const m = (x, y) => y === 0 ? x : m(y, x % y); const g = m(n, dn); return `${n/g}/${dn/g}`; };
+            const answer = simplificar(num, den);
+            if (type === 'multiple') {
+                const opts = [answer, simplificar(num+1, den), simplificar(num, den+1), simplificar(num*2, den)];
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
+            }
+            return { type: 'open', text, answer, explanation: answer };
+        }
+
+        function porcentajeLocal(type) {
+            const p = (Math.floor(Math.random() * 25) + 2) * 2;
+            const total = Math.floor(Math.random() * 180) + 20;
+            const answer = (p * total) / 100;
+            const text = `¿Cuánto es el ${p}% de ${total}?`;
+            if (type === 'multiple') {
+                const opts = [answer, answer + 1, answer - 1, answer + 2].map(String);
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `${p}% de ${total} = ${answer}` };
+            }
+            return { type: 'open', text, answer: String(answer), explanation: `${p}% de ${total} = ${answer}` };
+        }
+
+        function geometriaLocal(type) {
+            const a = Math.floor(Math.random() * 14) + 2;
+            const b = Math.floor(Math.random() * 14) + 2;
+            const tipo = Math.floor(Math.random() * 3);
+            let text, answer;
+            if (tipo === 0) { text = `Área de un rectángulo de ${a} cm × ${b} cm`; answer = a * b; }
+            else if (tipo === 1) { text = `Perímetro de un rectángulo de ${a} cm × ${b} cm`; answer = 2 * (a + b); }
+            else { text = `Área de un triángulo con base ${a} cm y altura ${b} cm`; answer = (a * b) / 2; }
+            if (type === 'multiple') {
+                const opts = [answer, answer + 2, answer - 2, answer * 2].map(String);
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `= ${answer}` };
+            }
+            return { type: 'open', text, answer: String(answer), explanation: `= ${answer}` };
+        }
+
+        function funcionLocal(type) {
+            const a = Math.floor(Math.random() * 5) + 1;
+            const b = Math.floor(Math.random() * 11) - 5;
+            const x = Math.floor(Math.random() * 8) - 3;
+            const y = a * x + b;
+            const text = `Si f(x) = ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}, ¿cuánto vale f(${x})?`;
+            if (type === 'multiple') {
+                const opts = [y, y + 1, y - 1, y + 2].map(String);
+                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `f(${x}) = ${y}` };
+            }
+            return { type: 'open', text, answer: String(y), explanation: `f(${x}) = ${y}` };
+        }
+
+        function sumaRestaLocal(grade, type) {
+            const a = Math.floor(Math.random() * (20 + grade * 5)) + 1;
+            const b = Math.floor(Math.random() * (20 + grade * 5)) + 1;
+            const esSuma = Math.random() > 0.5;
+            let text, answer;
+            if (esSuma) { text = `${a} + ${b} = ?`; answer = a + b; }
+            else { const [x, y] = a > b ? [a, b] : [b, a]; text = `${x} - ${y} = ?`; answer = x - y; }
             if (type === 'multiple') {
                 const opts = [answer, answer + 1, answer - 1, answer + 2].map(String);
                 return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `= ${answer}` };
