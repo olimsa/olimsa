@@ -25,16 +25,11 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             min-height: 500px;
         }
-        @media (max-width: 600px) {
-            .app { padding: 16px; border-radius: 16px; }
-        }
+        @media (max-width: 600px) { .app { padding: 16px; border-radius: 16px; } }
 
         .screen { display: none; }
         .screen.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         h1 { color: #2d3748; text-align: center; margin-bottom: 6px; font-size: 1.7rem; }
         @media (max-width: 600px) { h1 { font-size: 1.4rem; } }
@@ -46,50 +41,22 @@
             gap: 10px;
             margin-bottom: 20px;
         }
-        @media (max-width: 600px) {
-            .option-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        }
+        @media (max-width: 600px) { .option-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } }
         .option-card {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 16px 10px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 600;
-            color: #2d3748;
-            transition: 0.15s;
-            font-size: 0.9rem;
-            user-select: none;
+            background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 14px;
+            padding: 16px 10px; cursor: pointer; text-align: center;
+            font-weight: 600; color: #2d3748; transition: 0.15s;
+            font-size: 0.9rem; user-select: none;
         }
-        .option-card:hover {
-            background: #ebf4ff;
-            border-color: #667eea;
-            transform: translateY(-2px);
-        }
-        .option-card.selected {
-            background: #667eea;
-            border-color: #667eea;
-            color: white;
-        }
+        .option-card:hover { background: #ebf4ff; border-color: #667eea; transform: translateY(-2px); }
+        .option-card.selected { background: #667eea; border-color: #667eea; color: white; }
         .option-card .emoji { font-size: 1.5rem; display: block; margin-bottom: 4px; }
 
-        .nav-row {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
+        .nav-row { display: flex; gap: 10px; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; }
         .btn {
-            padding: 12px 26px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.15s;
-            font-size: 0.95rem;
-            touch-action: manipulation;
+            padding: 12px 26px; border: none; border-radius: 12px;
+            font-weight: 700; cursor: pointer; transition: 0.15s;
+            font-size: 0.95rem; touch-action: manipulation;
         }
         .btn-primary { background: #667eea; color: white; }
         .btn-primary:hover:not(:disabled) { background: #5a67d8; }
@@ -98,242 +65,103 @@
         .btn-secondary:hover { background: #cbd5e0; }
 
         .exam-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            background: #f7fafc;
-            padding: 12px 16px;
-            border-radius: 14px;
-            margin-bottom: 16px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 8px; background: #f7fafc;
+            padding: 12px 16px; border-radius: 14px; margin-bottom: 16px;
         }
         .exam-info { display: flex; gap: 12px; flex-wrap: wrap; font-weight: 600; color: #4a5568; font-size: 0.85rem; }
         .timer-box {
-            background: #667eea;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1rem;
-            min-width: 90px;
-            text-align: center;
+            background: #667eea; color: white; padding: 6px 16px;
+            border-radius: 20px; font-weight: 700; font-size: 1rem;
+            min-width: 90px; text-align: center;
         }
         .timer-box.danger { background: #e53e3e; animation: pulse 1s infinite; }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         .lock-box {
-            background: #ed8936;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1rem;
-            min-width: 90px;
-            text-align: center;
+            background: #ed8936; color: white; padding: 6px 16px;
+            border-radius: 20px; font-weight: 700; font-size: 1rem;
+            min-width: 90px; text-align: center;
         }
         .score-live {
-            background: #48bb78;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1rem;
-            min-width: 90px;
-            text-align: center;
-        }
-        .ai-loading {
-            background: #9f7aea;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-align: center;
+            background: #48bb78; color: white; padding: 6px 16px;
+            border-radius: 20px; font-weight: 700; font-size: 1rem;
+            min-width: 90px; text-align: center;
         }
 
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        @media (max-width: 850px) {
-            .main-layout { grid-template-columns: 1fr; }
-        }
+        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 850px) { .main-layout { grid-template-columns: 1fr; } }
 
-        .question-panel {
-            background: #f7fafc;
-            border-radius: 14px;
-            padding: 20px;
-            min-height: 340px;
-        }
+        .question-panel { background: #f7fafc; border-radius: 14px; padding: 20px; min-height: 340px; }
         .question-badge {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            display: inline-block; background: #667eea; color: white;
+            padding: 3px 10px; border-radius: 12px; font-size: 0.7rem;
+            font-weight: 700; text-transform: uppercase; margin-bottom: 10px;
         }
-        .question-badge.open { background: #ed8936; }
-        .question-badge.ai { background: #9f7aea; }
+        .question-badge.topic { background: #9f7aea; margin-left: 6px; }
         .question-text {
-            font-size: 1.2rem;
-            color: #2d3748;
-            margin-bottom: 16px;
-            min-height: 60px;
-            font-weight: 600;
-            line-height: 1.4;
-            white-space: pre-line;
+            font-size: 1.2rem; color: #2d3748; margin-bottom: 16px;
+            min-height: 60px; font-weight: 600; line-height: 1.4; white-space: pre-line;
         }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        @media (max-width: 500px) {
-            .options-grid { grid-template-columns: 1fr; }
-        }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
         .option-btn {
-            padding: 12px 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: 0.15s;
-            text-align: left;
-            font-weight: 500;
+            padding: 12px 14px; border: 2px solid #e2e8f0;
+            border-radius: 10px; background: white; cursor: pointer;
+            font-size: 0.95rem; transition: 0.15s; text-align: left; font-weight: 500;
         }
-        .option-btn:hover:not(.disabled) {
-            background: #ebf4ff;
-            border-color: #667eea;
-        }
+        .option-btn:hover:not(.disabled) { background: #ebf4ff; border-color: #667eea; }
         .option-btn.correct { background: #c6f6d5; border-color: #48bb78; color: #22543d; }
         .option-btn.wrong { background: #fed7d7; border-color: #f56565; color: #742a2a; }
         .option-btn.disabled { cursor: not-allowed; opacity: 0.85; }
 
-        .open-answer { display: flex; flex-direction: column; gap: 10px; }
-        .open-answer input {
-            padding: 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            text-align: center;
-            font-weight: 600;
-        }
-        .open-answer input:focus { outline: none; border-color: #ed8936; }
-        .open-answer input.correct { border-color: #48bb78; background: #c6f6d5; }
-        .open-answer input.wrong { border-color: #f56565; background: #fed7d7; }
-        .open-answer button {
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            background: #ed8936;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
         .feedback {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-top: 12px;
-            font-weight: 500;
-            text-align: center;
-            font-size: 0.9rem;
+            padding: 12px 16px; border-radius: 10px; margin-top: 12px;
+            font-weight: 500; text-align: center; font-size: 0.9rem;
         }
         .feedback.success { background: #c6f6d5; color: #22543d; }
         .feedback.error { background: #fed7d7; color: #742a2a; }
         .feedback.info { background: #ebf4ff; color: #2b4b8f; }
-        .feedback.loading { background: #e9d8fd; color: #553c9a; }
 
         .scratch-panel {
-            background: #f7fafc;
-            border-radius: 14px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
+            background: #f7fafc; border-radius: 14px; padding: 16px;
+            display: flex; flex-direction: column;
         }
         .scratch-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
         }
         .scratch-title { font-weight: 700; color: #2d3748; font-size: 0.95rem; }
         .scratch-tools { display: flex; gap: 6px; flex-wrap: wrap; }
         .tool-btn {
-            padding: 5px 10px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 5px 10px; border: 2px solid #e2e8f0; border-radius: 8px;
+            background: white; cursor: pointer; font-size: 0.8rem; font-weight: 600;
         }
         .tool-btn.active { background: #667eea; color: white; border-color: #667eea; }
         #scratchCanvas {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            cursor: crosshair;
-            touch-action: none;
-            width: 100%;
-            height: 320px;
-            display: block;
+            background: white; border: 2px solid #e2e8f0; border-radius: 10px;
+            cursor: crosshair; touch-action: none; width: 100%; height: 320px; display: block;
         }
-        @media (max-width: 600px) {
-            #scratchCanvas { height: 240px; }
-        }
+        @media (max-width: 600px) { #scratchCanvas { height: 240px; } }
         .scratch-hint { font-size: 0.75rem; color: #a0aec0; margin-top: 6px; text-align: center; }
 
         .result-screen { text-align: center; padding: 30px 15px; }
         .result-screen .big-emoji { font-size: 4rem; margin-bottom: 15px; }
         .result-screen h2 { color: #2d3748; margin-bottom: 12px; font-size: 1.7rem; }
         .result-screen .score-box {
-            background: #f7fafc;
-            border-radius: 18px;
-            padding: 24px 40px;
-            display: inline-block;
-            margin: 16px 0;
+            background: #f7fafc; border-radius: 18px; padding: 24px 40px;
+            display: inline-block; margin: 16px 0;
         }
-        .result-screen .grade {
-            font-size: 4rem;
-            font-weight: 800;
-            color: #667eea;
-            line-height: 1;
-        }
+        .result-screen .grade { font-size: 4rem; font-weight: 800; color: #667eea; line-height: 1; }
         .result-screen .grade-label {
-            font-size: 0.9rem;
-            color: #718096;
-            font-weight: 600;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.9rem; color: #718096; font-weight: 600;
+            margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;
         }
         .result-screen .details {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 16px;
-            flex-wrap: wrap;
+            display: flex; gap: 20px; justify-content: center;
+            margin-top: 16px; flex-wrap: wrap;
         }
         .result-screen .details span { font-weight: 600; font-size: 1rem; }
-        .result-screen .fraction {
-            font-size: 1.2rem;
-            color: #4a5568;
-            margin-top: 8px;
-            font-weight: 600;
-        }
+        .result-screen .fraction { font-size: 1.2rem; color: #4a5568; margin-top: 8px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -370,9 +198,9 @@
                      onclick="startExam()"
                      onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.15)';"
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                    <div style="font-size: 3rem; margin-bottom: 10px;">🤖</div>
-                    <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Comenzar Examen con IA</h2>
-                    <p style="font-size: 0.95rem; opacity: 0.9;">Preguntas generadas por Cerebras · 10 minutos · Calificación 1-5</p>
+                    <div style="font-size: 3rem; margin-bottom: 10px;">📝</div>
+                    <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Comenzar Examen</h2>
+                    <p style="font-size: 0.95rem; opacity: 0.9;">Preguntas infinitas · 10 minutos · Calificación 1-5</p>
                 </div>
             </div>
             <div class="nav-row">
@@ -390,24 +218,20 @@
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <div class="lock-box" id="lockBox" style="display: none;">🔒 3</div>
-                    <div class="ai-loading" id="aiLoading" style="display: none;">🤖 Generando...</div>
                     <div class="score-live" id="scoreLive">✅ 0 / ❌ 0</div>
                     <div class="timer-box" id="timerBox">⏱️ 10:00</div>
                 </div>
             </div>
             <div class="main-layout">
                 <div class="question-panel">
-                    <span class="question-badge" id="questionBadge">Cargando...</span>
+                    <span class="question-badge" id="questionBadge">🎯 Opción múltiple</span>
+                    <span class="question-badge topic" id="topicBadge" style="display:none;"></span>
                     <div class="question-text" id="questionText">Cargando pregunta...</div>
                     <div class="options-grid" id="optionsContainer">
                         <button class="option-btn" onclick="selectOption(0)">A) ---</button>
                         <button class="option-btn" onclick="selectOption(1)">B) ---</button>
                         <button class="option-btn" onclick="selectOption(2)">C) ---</button>
                         <button class="option-btn" onclick="selectOption(3)">D) ---</button>
-                    </div>
-                    <div class="open-answer" id="openAnswerContainer" style="display: none;">
-                        <input type="text" id="openAnswerInput" placeholder="Tu respuesta..." inputmode="decimal">
-                        <button onclick="checkOpenAnswer()">✓ Comprobar</button>
                     </div>
                     <div class="feedback info" id="feedback">💡 Resuelve la pregunta</div>
                 </div>
@@ -455,13 +279,6 @@
 
     <script>
         // ============================================================
-        // 🔑 API KEY DE CEREBRAS
-        // ============================================================
-        const CEREBRAS_API_KEY = 'TU_CEREBRAS_API_KEY_AQUI';
-        const CEREBRAS_URL = 'https://api.cerebras.ai/v1/chat/completions';
-        const CEREBRAS_MODEL = 'llama-3.3-70b';
-
-        // ============================================================
         // CONFIGURACIÓN
         // ============================================================
         const TOTAL_TIME_SECONDS = 600;
@@ -491,6 +308,7 @@
         let selectedGrade = null;
         let selectedTopics = [];
         let currentQuestion = null;
+        let currentTopic = '';
         let answered = false;
         let correctCount = 0;
         let wrongCount = 0;
@@ -512,9 +330,7 @@
                 if (lockTimer) { clearInterval(lockTimer); lockTimer = null; }
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (name === 'exam') {
-                setTimeout(resizeCanvas, 100);
-            }
+            if (name === 'exam') { setTimeout(resizeCanvas, 100); }
         }
 
         // ============================================================
@@ -537,10 +353,7 @@
                 grid.appendChild(card);
             }
             document.getElementById('btnGradeNext').onclick = () => {
-                if (selectedGrade) {
-                    buildTopicsScreen();
-                    goToScreen('topics');
-                }
+                if (selectedGrade) { buildTopicsScreen(); goToScreen('topics'); }
             };
         }
 
@@ -551,7 +364,6 @@
             const grid = document.getElementById('topicsGrid');
             grid.innerHTML = '';
             selectedTopics = [];
-
             const allCard = document.createElement('div');
             allCard.className = 'option-card selected';
             allCard.dataset.topic = 'Todos';
@@ -605,11 +417,8 @@
         // EXAMEN
         // ============================================================
         function startExam() {
-            correctCount = 0;
-            wrongCount = 0;
-            totalAnswered = 0;
-            timeRemaining = TOTAL_TIME_SECONDS;
-            timeUsed = 0;
+            correctCount = 0; wrongCount = 0; totalAnswered = 0;
+            timeRemaining = TOTAL_TIME_SECONDS; timeUsed = 0;
             document.getElementById('examGrade').textContent = selectedGrade;
             document.getElementById('examTopic').textContent = selectedTopics.includes('Todos') ? 'Todos' : selectedTopics.join(', ');
             updateScoreLive();
@@ -622,12 +431,10 @@
             if (globalTimer) clearInterval(globalTimer);
             updateTimerDisplay();
             globalTimer = setInterval(() => {
-                timeRemaining--;
-                timeUsed++;
+                timeRemaining--; timeUsed++;
                 updateTimerDisplay();
                 if (timeRemaining <= 0) {
-                    clearInterval(globalTimer);
-                    globalTimer = null;
+                    clearInterval(globalTimer); globalTimer = null;
                     endExam(true);
                 }
             }, 1000);
@@ -647,155 +454,50 @@
             document.getElementById('examProgress').textContent = `${totalAnswered} respondidas`;
         }
 
-        // ============================================================
-        // 🤖 GENERACIÓN DE PREGUNTAS CON CEREBRAS
-        // ============================================================
         function pickRandomTopic() {
-            const topics = selectedTopics.includes('Todos') ? TOPICS_BY_GRADE[selectedGrade] : selectedTopics;
+            let topics;
+            if (selectedTopics.includes('Todos') || selectedTopics.length === 0) {
+                topics = TOPICS_BY_GRADE[selectedGrade] || [];
+            } else {
+                topics = selectedTopics;
+            }
+            if (topics.length === 0) topics = ['Sumas y restas'];
             return topics[Math.floor(Math.random() * topics.length)];
         }
 
-        async function generateQuestionWithAI(topic, type) {
-            const tipoTexto = type === 'multiple' ? 'opción múltiple con 4 opciones (A, B, C, D)' : 'respuesta abierta (el estudiante escribe el resultado)';
-
-            const prompt = `Genera UNA pregunta de matemáticas para un estudiante de ${selectedGrade}° grado (secundaria/preparatoria) sobre el tema "${topic}".
-
-Requisitos:
-- Tipo: ${tipoTexto}
-- Dificultad: apropiada para olimpiadas escolares
-- La pregunta debe ser clara y concisa
-- DEBES responder SOLO con un JSON válido, sin texto adicional, sin markdown, sin \`\`\`
-
-Formato EXACTO del JSON:
-{
-  "text": "Texto de la pregunta (puede tener \\n para saltos de línea)",
-  "type": "multiple" o "open",
-  "options": ["opción A", "opción B", "opción C", "opción D"],  // solo si type es "multiple"
-  "correctIndex": 0,  // índice de la respuesta correcta (0-3), solo si type es "multiple"
-  "answer": "respuesta correcta como string",  // para type "open"
-  "explanation": "explicación breve de la respuesta"
-}
-
-Si el tipo es "open", omite el campo options y correctIndex, y usa "answer".
-Si el tipo es "multiple", omite el campo answer.
-
-Ejemplo para type "multiple":
-{"text": "Factoriza: x² + 5x + 6", "type": "multiple", "options": ["(x+2)(x+3)", "(x+1)(x+6)", "(x-2)(x-3)", "(x+5)(x+1)"], "correctIndex": 0, "explanation": "(x+2)(x+3) = x² + 5x + 6"}
-
-Ejemplo para type "open":
-{"text": "Resuelve: 3x + 7 = 22", "type": "open", "answer": "5", "explanation": "3x = 15, x = 5"}`;
-
-            const response = await fetch(CEREBRAS_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${CEREBRAS_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: CEREBRAS_MODEL,
-                    messages: [
-                        { role: 'system', content: 'Eres un generador de preguntas de matemáticas. Respondes SOLO con JSON válido, sin markdown, sin texto adicional.' },
-                        { role: 'user', content: prompt }
-                    ],
-                    temperature: 0.9,
-                    max_tokens: 500
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Cerebras error ${response.status}`);
-            }
-
-            const data = await response.json();
-            let contenido = data.choices[0].message.content.trim();
-            contenido = contenido.replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
-            const q = JSON.parse(contenido);
-
-            if (!q.text || !q.type) throw new Error('JSON inválido');
-
-            if (q.type === 'multiple') {
-                if (!Array.isArray(q.options) || q.options.length !== 4 || typeof q.correctIndex !== 'number') {
-                    throw new Error('Opciones inválidas');
-                }
-            } else {
-                if (typeof q.answer !== 'string') {
-                    q.answer = String(q.answer);
-                }
-            }
-
-            return q;
-        }
-
-        async function loadExamQuestion() {
+        function loadExamQuestion() {
             const topic = pickRandomTopic();
-            const type = Math.random() > 0.5 ? 'multiple' : 'open';
-
-            document.getElementById('questionText').textContent = '🤖 Generando pregunta con IA...';
-            document.getElementById('questionBadge').textContent = '🤖 IA';
-            document.getElementById('questionBadge').className = 'question-badge ai';
-            document.getElementById('feedback').textContent = '⏳ Espera un momento...';
-            document.getElementById('feedback').className = 'feedback loading';
-            document.getElementById('aiLoading').style.display = 'block';
-
-            document.getElementById('optionsContainer').style.display = 'none';
-            document.getElementById('openAnswerContainer').style.display = 'none';
-
-            try {
-                const q = await generateQuestionWithAI(topic, type);
-                currentQuestion = q;
-                answered = false;
-                document.getElementById('aiLoading').style.display = 'none';
-                displayQuestion(q);
-            } catch (err) {
-                console.error('Error IA:', err);
-                currentQuestion = generateLocalFallback(selectedGrade, topic, type);
-                answered = false;
-                document.getElementById('aiLoading').style.display = 'none';
-                displayQuestion(currentQuestion);
-                document.getElementById('feedback').textContent = '⚠️ IA no disponible, usando pregunta local';
-                document.getElementById('feedback').className = 'feedback info';
-            }
-        }
-
-        function displayQuestion(q) {
-            document.getElementById('questionText').textContent = q.text;
-
-            const optionsContainer = document.getElementById('optionsContainer');
-            const openContainer = document.getElementById('openAnswerContainer');
-            const badge = document.getElementById('questionBadge');
-
-            if (q.type === 'multiple') {
-                badge.textContent = '🎯 Opción múltiple';
-                badge.className = 'question-badge';
-                optionsContainer.style.display = 'grid';
-                openContainer.style.display = 'none';
-
-                const letters = ['A', 'B', 'C', 'D'];
-                const btns = optionsContainer.querySelectorAll('.option-btn');
-                btns.forEach((btn, i) => {
-                    btn.textContent = letters[i] + ') ' + q.options[i];
-                    btn.className = 'option-btn';
-                    btn.disabled = false;
-                });
-            } else {
-                badge.textContent = '✍️ Respuesta abierta';
-                badge.className = 'question-badge open';
-                optionsContainer.style.display = 'none';
-                openContainer.style.display = 'flex';
-
-                const input = document.getElementById('openAnswerInput');
-                input.value = '';
-                input.className = '';
-                input.disabled = false;
-            }
-
-            const fb = document.getElementById('feedback');
-            fb.textContent = '💡 Resuelve la pregunta';
-            fb.className = 'feedback info';
-
-            clearCanvas();
+            currentTopic = topic;
+            // ✅ SIEMPRE opción múltiple
+            currentQuestion = generateQuestionByTopic(selectedGrade, topic);
+            answered = false;
             isLocked = false;
             document.getElementById('lockBox').style.display = 'none';
+            displayQuestion(currentQuestion, topic);
+            clearCanvas();
+        }
+
+        function displayQuestion(q, topic) {
+            document.getElementById('questionText').textContent = q.text;
+            const topicBadge = document.getElementById('topicBadge');
+            if (topic) {
+                topicBadge.textContent = '📖 ' + topic;
+                topicBadge.style.display = 'inline-block';
+            } else {
+                topicBadge.style.display = 'none';
+            }
+
+            const letters = ['A', 'B', 'C', 'D'];
+            const btns = document.querySelectorAll('#optionsContainer .option-btn');
+            btns.forEach((btn, i) => {
+                btn.textContent = letters[i] + ') ' + q.options[i];
+                btn.className = 'option-btn';
+                btn.disabled = false;
+            });
+
+            const fb = document.getElementById('feedback');
+            fb.textContent = '💡 Elige una opción';
+            fb.className = 'feedback info';
         }
 
         function startLock() {
@@ -804,7 +506,6 @@ Ejemplo para type "open":
             const lockBox = document.getElementById('lockBox');
             lockBox.style.display = 'block';
             lockBox.textContent = `🔒 ${lockTime}`;
-
             if (lockTimer) clearInterval(lockTimer);
             lockTimer = setInterval(() => {
                 lockTime--;
@@ -820,10 +521,8 @@ Ejemplo para type "open":
         }
 
         function selectOption(index) {
-            if (answered || isLocked || !currentQuestion || currentQuestion.type !== 'multiple') return;
-            answered = true;
-            totalAnswered++;
-
+            if (answered || isLocked || !currentQuestion) return;
+            answered = true; totalAnswered++;
             const btns = document.querySelectorAll('#optionsContainer .option-btn');
             const isCorrect = index === currentQuestion.correctIndex;
             btns.forEach((btn, i) => {
@@ -832,7 +531,6 @@ Ejemplo para type "open":
                 if (i === currentQuestion.correctIndex) btn.classList.add('correct');
                 if (i === index && !isCorrect) btn.classList.add('wrong');
             });
-
             const fb = document.getElementById('feedback');
             if (isCorrect) {
                 fb.textContent = '✅ ¡Correcto!';
@@ -843,40 +541,6 @@ Ejemplo para type "open":
                 fb.className = 'feedback error';
                 wrongCount++;
             }
-
-            updateScoreLive();
-            startLock();
-        }
-
-        function checkOpenAnswer() {
-            if (answered || isLocked || !currentQuestion || currentQuestion.type !== 'open') return;
-            const input = document.getElementById('openAnswerInput');
-            const val = input.value.trim();
-            if (!val) return;
-            answered = true;
-            totalAnswered++;
-            input.disabled = true;
-
-            const normalize = (s) => String(s).replace(/\s/g, '').replace(/,/g, '.').toLowerCase();
-            let isCorrect = normalize(val) === normalize(currentQuestion.answer);
-            if (!isCorrect) {
-                const n1 = parseFloat(val.replace(',', '.'));
-                const n2 = parseFloat(currentQuestion.answer.replace(',', '.'));
-                if (!isNaN(n1) && !isNaN(n2) && Math.abs(n1 - n2) < 0.001) isCorrect = true;
-            }
-
-            if (isCorrect) {
-                input.classList.add('correct');
-                document.getElementById('feedback').textContent = '✅ ¡Correcto! ' + (currentQuestion.explanation || '');
-                document.getElementById('feedback').className = 'feedback success';
-                correctCount++;
-            } else {
-                input.classList.add('wrong');
-                document.getElementById('feedback').textContent = '❌ Incorrecto. Respuesta: ' + currentQuestion.answer + ' — ' + (currentQuestion.explanation || '');
-                document.getElementById('feedback').className = 'feedback error';
-                wrongCount++;
-            }
-
             updateScoreLive();
             startLock();
         }
@@ -884,11 +548,8 @@ Ejemplo para type "open":
         function endExam(completed = false) {
             if (globalTimer) { clearInterval(globalTimer); globalTimer = null; }
             if (lockTimer) { clearInterval(lockTimer); lockTimer = null; }
-            if (completed) {
-                showResult();
-            } else {
-                goToScreen('menu');
-            }
+            if (completed) showResult();
+            else goToScreen('menu');
         }
 
         function showResult() {
@@ -899,12 +560,10 @@ Ejemplo para type "open":
                 grade = Math.round(rawGrade * 10) / 10;
                 if (grade < 1 && correctCount > 0) grade = 1.0;
             }
-
             document.getElementById('resultGrade').textContent = grade.toFixed(1);
             document.getElementById('resultFraction').textContent = `${correctCount} / ${total} correctas`;
             document.getElementById('resultCorrect').textContent = correctCount;
             document.getElementById('resultWrong').textContent = wrongCount;
-
             const mins = Math.floor(timeUsed / 60);
             const secs = timeUsed % 60;
             document.getElementById('resultTime').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -915,172 +574,362 @@ Ejemplo para type "open":
             else if (grade >= 2.5) { emoji = '👍'; title = '¡Buen intento!'; }
             else if (grade >= 1.5) { emoji = '💪'; title = '¡Sigue practicando!'; }
             else { emoji = '📚'; title = '¡A estudiar más!'; }
-
             document.getElementById('resultEmoji').textContent = emoji;
             document.getElementById('resultTitle').textContent = title;
             goToScreen('result');
         }
 
         // ============================================================
-        // FALLBACK LOCAL VARIADO
+        // GENERADORES DE PREGUNTAS (todas devuelven opción múltiple)
         // ============================================================
-        function generateLocalFallback(grade, topic, type) {
-            const t = (topic || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
-            if (t.includes('factoriz')) return factorizacionLocal(type);
-            if (t.includes('ecuaci')) return ecuacionLinealLocal(type);
-            if (t.includes('sistema')) return sistemaLocal(type);
-            if (t.includes('fracci')) return fraccionLocal(type);
-            if (t.includes('porcentaje')) return porcentajeLocal(type);
-            if (t.includes('area') || t.includes('geometr') || t.includes('perimetro') || t.includes('volumen')) return geometriaLocal(type);
-            if (t.includes('funcion')) return funcionLocal(type);
-            if (t.includes('cuadr')) return cuadraticaLocal(type);
-
-            return sumaRestaLocal(grade, type);
+        function normalizeText(str) {
+            return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         }
 
-        function factorizacionLocal(type) {
-            const subtipos = ['diferenciaCuadrados', 'tcp', 'simple', 'general'];
+        // Genera 4 opciones únicas, con la correcta incluida
+        function generarOpciones(correct, decimal = false) {
+            const opts = new Set([correct]);
+            let attempts = 0;
+            while (opts.size < 4 && attempts < 200) {
+                attempts++;
+                let candidate;
+                if (decimal) {
+                    candidate = Math.round((correct + (Math.random() * 2 - 1) * Math.max(1, Math.abs(correct) * 0.3)) * 100) / 100;
+                } else {
+                    const range = Math.max(3, Math.abs(correct) * 0.3 + 2);
+                    const offset = rand(-Math.ceil(range), Math.ceil(range));
+                    candidate = correct + (offset === 0 ? (rand(0,1) ? 1 : -1) : offset);
+                }
+                if (candidate !== correct && candidate > -1000 && Number.isFinite(candidate)) opts.add(candidate);
+            }
+            while (opts.size < 4) opts.add(rand(1, 50));
+            return Array.from(opts).sort(() => Math.random() - 0.5);
+        }
+
+        // Genera 4 opciones únicas de strings
+        function generarOpcionesTexto(correct, generadorFake) {
+            const opts = new Set([correct]);
+            let tries = 0;
+            while (opts.size < 4 && tries < 100) {
+                tries++;
+                const fake = generadorFake();
+                if (fake !== correct) opts.add(fake);
+            }
+            while (opts.size < 4) opts.add(`(x + ${rand(1, 9)})(x + ${rand(1, 9)})`);
+            return Array.from(opts).sort(() => Math.random() - 0.5);
+        }
+
+        function generateQuestionByTopic(grade, topic) {
+            const t = normalizeText(topic);
+            if (t.includes('factoriz')) return factorizacion(grade);
+            if (t.includes('cuadr')) return ecuacionCuadratica(grade);
+            if (t.includes('sistema')) return sistemaEcuaciones(grade);
+            if (t.includes('polinomio')) return polinomios(grade);
+            if (t.includes('funcion')) return funciones(grade);
+            if (t.includes('trigono')) return trigonometria(grade);
+            if (t.includes('logaritmo')) return logaritmos(grade);
+            if (t.includes('fracci')) return fracciones(grade);
+            if (t.includes('porcentaje')) return porcentajes(grade);
+            if (t.includes('area') || t.includes('geometr') || t.includes('perimetro') || t.includes('volumen')) return geometria(grade);
+            if (t.includes('proporci') || t.includes('razon')) return proporciones(grade);
+            if (t.includes('multiplic') || t.includes('division')) return multiplicacionDivision(grade);
+            if (t.includes('suma') || t.includes('resta') || t.includes('contar')) return sumaResta(grade);
+            if (t.includes('decimal')) return decimales(grade);
+            if (t.includes('entero')) return numerosEnteros(grade);
+            if (t.includes('estad') || t.includes('probabilid')) return estadistica(grade);
+            if (t.includes('sucesi') || t.includes('serie')) return sucesiones(grade);
+            if (t.includes('medida')) return medidas(grade);
+            if (t.includes('forma')) return formas(grade);
+            if (t.includes('calculo') || t.includes('derivada') || t.includes('integral')) return calculo(grade);
+            if (t.includes('ecuaci')) return ecuacionLineal(grade);
+            if (grade <= 3) return sumaResta(grade);
+            if (grade <= 5) return fracciones(grade);
+            if (grade <= 7) return ecuacionLineal(grade);
+            if (grade <= 9) return factorizacion(grade);
+            if (grade <= 11) return funciones(grade);
+            return calculo(grade);
+        }
+
+        // ---------- FACTORIZACIÓN (7 subtipos) ----------
+        function factorizacion(grade) {
+            const subtipos = ['comun', 'diferenciaCuadrados', 'tcp', 'simple', 'general', 'sumaCubos', 'diferenciaCubos'];
             const sub = subtipos[Math.floor(Math.random() * subtipos.length)];
-            let text, answer;
-            if (sub === 'diferenciaCuadrados') {
-                const b = Math.floor(Math.random() * 8) + 2;
+            let text = '', answer = '', fakeGen = null;
+
+            if (sub === 'comun') {
+                const a = rand(2, 9), b = rand(2, 9), c = rand(2, 9);
+                text = `Factoriza: ${a*b}x + ${a*c}`;
+                answer = `${a}(${b}x + ${c})`;
+                fakeGen = () => { const a2 = rand(2,9), b2 = rand(2,9), c2 = rand(2,9); return `${a2}(${b2}x + ${c2})`; };
+            } else if (sub === 'diferenciaCuadrados') {
+                const b = rand(2, 9);
                 text = `Factoriza: x² - ${b*b}`;
                 answer = `(x + ${b})(x - ${b})`;
+                fakeGen = () => { const b2 = rand(2,9); return `(x + ${b2})(x - ${b2})`; };
             } else if (sub === 'tcp') {
-                const b = Math.floor(Math.random() * 8) + 2;
+                const b = rand(2, 9);
                 text = `Factoriza: x² + ${2*b}x + ${b*b}`;
                 answer = `(x + ${b})²`;
+                fakeGen = () => { const b2 = rand(2,9); return `(x + ${b2})²`; };
             } else if (sub === 'simple') {
-                const p = Math.floor(Math.random() * 12) - 6 || 1;
-                const q = Math.floor(Math.random() * 12) - 6 || 2;
+                const p = rand(-7, 7) || 1;
+                const q = rand(-7, 7) || 2;
                 const b = p + q, c = p * q;
                 text = `Factoriza: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)}`;
                 answer = `(x ${p >= 0 ? '+' : '-'} ${Math.abs(p)})(x ${q >= 0 ? '+' : '-'} ${Math.abs(q)})`;
-            } else {
-                const a = Math.floor(Math.random() * 3) + 2;
-                const p = Math.floor(Math.random() * 5) + 1;
-                const q = Math.floor(Math.random() * 5) + 1;
+                fakeGen = () => { const p2 = rand(-7,7)||1, q2 = rand(-7,7)||2; return `(x ${p2 >= 0 ? '+' : '-'} ${Math.abs(p2)})(x ${q2 >= 0 ? '+' : '-'} ${Math.abs(q2)})`; };
+            } else if (sub === 'general') {
+                const a = rand(2, 4), p = rand(1, 5), q = rand(1, 5);
                 const b = a * q + p, c = p * q;
                 text = `Factoriza: ${a}x² + ${b}x + ${c}`;
                 answer = `(${a}x + ${p})(x + ${q})`;
+                fakeGen = () => { const a2 = rand(2,4), p2 = rand(1,5), q2 = rand(1,5); return `(${a2}x + ${p2})(x + ${q2})`; };
+            } else if (sub === 'sumaCubos') {
+                const b = rand(1, 4);
+                text = `Factoriza: x³ + ${b*b*b}`;
+                answer = `(x + ${b})(x² - ${b}x + ${b*b})`;
+                fakeGen = () => { const b2 = rand(1,4); return `(x + ${b2})(x² - ${b2}x + ${b2*b2})`; };
+            } else {
+                const b = rand(1, 4);
+                text = `Factoriza: x³ - ${b*b*b}`;
+                answer = `(x - ${b})(x² + ${b}x + ${b*b})`;
+                fakeGen = () => { const b2 = rand(1,4); return `(x - ${b2})(x² + ${b2}x + ${b2*b2})`; };
             }
-            if (type === 'multiple') {
-                const opts = [answer, `(x+1)(x+${Math.floor(Math.random()*9)+1})`, `(x-2)(x-${Math.floor(Math.random()*9)+1})`, `(x+${Math.floor(Math.random()*5)+1})(x+${Math.floor(Math.random()*5)+1})`];
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
-            }
-            return { type: 'open', text: text + '\n(Escribe los factores)', answer, explanation: answer };
+
+            const options = generarOpcionesTexto(answer, fakeGen);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: answer };
         }
 
-        function ecuacionLinealLocal(type) {
-            const x = Math.floor(Math.random() * 12) + 1;
-            const a = Math.floor(Math.random() * 8) + 1;
-            const b = Math.floor(Math.random() * 15);
+        // ---------- ECUACIÓN LINEAL ----------
+        function ecuacionLineal(grade) {
+            const x = rand(1, 12), a = rand(1, 8), b = rand(0, 15);
             const c = a * x + b;
             const text = `Resuelve: ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)} = ${c}`;
-            if (type === 'multiple') {
-                const opts = [x, x+1, x-1, x+2].map(String);
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `x = ${x}` };
-            }
-            return { type: 'open', text, answer: String(x), explanation: `x = ${x}` };
+            const options = generarOpciones(x);
+            return { text, options, correctIndex: options.indexOf(x), explanation: `x = ${x}` };
         }
 
-        function cuadraticaLocal(type) {
-            const r1 = Math.floor(Math.random() * 12) - 6 || 1;
-            const r2 = Math.floor(Math.random() * 12) - 6 || 2;
+        // ---------- ECUACIÓN CUADRÁTICA ----------
+        function ecuacionCuadratica(grade) {
+            const r1 = rand(-8, 8) || 1, r2 = rand(-8, 8) || 2;
             const b = -(r1 + r2), c = r1 * r2;
-            const text = `Resuelve: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)} = 0\n(Da las dos soluciones separadas por coma)`;
+            const text = `Resuelve: x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)} = 0`;
             const answer = `${Math.min(r1,r2)}, ${Math.max(r1,r2)}`;
-            if (type === 'multiple') {
-                const opts = [answer, `${r1+1}, ${r2}`, `${r1}, ${r2+1}`, `${r1-1}, ${r2}`];
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
+            const options = new Set([answer]);
+            while (options.size < 4) {
+                const a1 = rand(-8, 8) || 1, a2 = rand(-8, 8) || 2;
+                options.add(`${Math.min(a1,a2)}, ${Math.max(a1,a2)}`);
             }
-            return { type: 'open', text, answer, explanation: answer };
+            const arr = Array.from(options).sort(() => Math.random() - 0.5);
+            return { text, options: arr, correctIndex: arr.indexOf(answer), explanation: `x₁ = ${Math.min(r1,r2)}, x₂ = ${Math.max(r1,r2)}` };
         }
 
-        function sistemaLocal(type) {
-            const x = Math.floor(Math.random() * 8) + 1;
-            const y = Math.floor(Math.random() * 8) + 1;
-            const a1 = Math.floor(Math.random() * 5) + 1, b1 = Math.floor(Math.random() * 5) + 1;
-            const a2 = Math.floor(Math.random() * 5) + 1, b2 = Math.floor(Math.random() * 5) + 1;
+        // ---------- SISTEMA ----------
+        function sistemaEcuaciones(grade) {
+            const x = rand(1, 8), y = rand(1, 8);
+            const a1 = rand(1, 5), b1 = rand(1, 5);
+            const a2 = rand(1, 5), b2 = rand(1, 5);
             const c1 = a1 * x + b1 * y, c2 = a2 * x + b2 * y;
-            const text = `Resuelve:\n${a1}x + ${b1}y = ${c1}\n${a2}x + ${b2}y = ${c2}\n(Escribe "x,y")`;
-            const answer = `${x},${y}`;
-            if (type === 'multiple') {
-                const opts = [answer, `${x+1},${y}`, `${x},${y+1}`, `${x-1},${y}`];
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `x=${x}, y=${y}` };
-            }
-            return { type: 'open', text, answer, explanation: `x=${x}, y=${y}` };
+            const text = `Resuelve:\n${a1}x + ${b1}y = ${c1}\n${a2}x + ${b2}y = ${c2}`;
+            const answer = `x=${x}, y=${y}`;
+            const options = new Set([answer]);
+            while (options.size < 4) options.add(`x=${rand(1,8)}, y=${rand(1,8)}`);
+            const arr = Array.from(options).sort(() => Math.random() - 0.5);
+            return { text, options: arr, correctIndex: arr.indexOf(answer), explanation: answer };
         }
 
-        function fraccionLocal(type) {
-            const a = Math.floor(Math.random() * 9) + 1;
-            const b = Math.floor(Math.random() * 9) + 2;
-            const c = Math.floor(Math.random() * 9) + 1;
-            const d = Math.floor(Math.random() * 9) + 2;
+        // ---------- POLINOMIOS ----------
+        function polinomios(grade) {
+            const a = rand(1, 5), b = rand(1, 5), c = rand(1, 10), x = rand(1, 5);
+            const valor = a * x * x + b * x + c;
+            const text = `Evalúa P(x) = ${a}x² + ${b}x + ${c} en x = ${x}`;
+            const options = generarOpciones(valor);
+            return { text, options, correctIndex: options.indexOf(valor), explanation: `P(${x}) = ${valor}` };
+        }
+
+        // ---------- FUNCIONES ----------
+        function funciones(grade) {
+            const a = rand(1, 5), b = rand(-5, 5), x = rand(-3, 5);
+            const y = a * x + b;
+            const text = `Si f(x) = ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}, ¿cuánto vale f(${x})?`;
+            const options = generarOpciones(y);
+            return { text, options, correctIndex: options.indexOf(y), explanation: `f(${x}) = ${y}` };
+        }
+
+        // ---------- TRIGONOMETRÍA ----------
+        function trigonometria(grade) {
+            const valores = { 'sen': {0:0,30:0.5,45:Math.SQRT2/2,60:Math.sqrt(3)/2,90:1}, 'cos': {0:1,30:Math.sqrt(3)/2,45:Math.SQRT2/2,60:0.5,90:0} };
+            const func = Math.random() > 0.5 ? 'sen' : 'cos';
+            const ang = [0, 30, 45, 60, 90][rand(0, 4)];
+            const correct = Math.round(valores[func][ang] * 100) / 100;
+            const text = `¿Cuánto vale ${func}(${ang}°)? (2 decimales)`;
+            const options = generarOpciones(correct, true);
+            return { text, options, correctIndex: options.indexOf(correct), explanation: `${func}(${ang}°) = ${correct}` };
+        }
+
+        // ---------- LOGARITMOS ----------
+        function logaritmos(grade) {
+            const base = rand(2, 5), exp = rand(2, 4);
+            const valor = Math.pow(base, exp);
+            const text = `¿Cuánto vale log_${base}(${valor})?`;
+            const options = generarOpciones(exp);
+            return { text, options, correctIndex: options.indexOf(exp), explanation: `log_${base}(${valor}) = ${exp}` };
+        }
+
+        // ---------- FRACCIONES ----------
+        function fracciones(grade) {
+            const a = rand(1, 10), b = rand(2, 10), c = rand(1, 10), d = rand(2, 10);
             const num = a * d + c * b, den = b * d;
             const text = `Suma: ${a}/${b} + ${c}/${d} = ?`;
-            const simplificar = (n, dn) => { const m = (x, y) => y === 0 ? x : m(y, x % y); const g = m(n, dn); return `${n/g}/${dn/g}`; };
-            const answer = simplificar(num, den);
-            if (type === 'multiple') {
-                const opts = [answer, simplificar(num+1, den), simplificar(num, den+1), simplificar(num*2, den)];
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: answer };
-            }
-            return { type: 'open', text, answer, explanation: answer };
+            const answerFrac = simplificar(num, den);
+            const options = new Set([answerFrac]);
+            while (options.size < 4) options.add(simplificar(rand(1, 20), rand(2, 15)));
+            const arr = Array.from(options).sort(() => Math.random() - 0.5);
+            return { text, options: arr, correctIndex: arr.indexOf(answerFrac), explanation: `${num}/${den} = ${answerFrac}` };
         }
 
-        function porcentajeLocal(type) {
-            const p = (Math.floor(Math.random() * 25) + 2) * 2;
-            const total = Math.floor(Math.random() * 180) + 20;
+        function simplificar(num, den) {
+            const mcd = (a, b) => b === 0 ? a : mcd(b, a % b);
+            const m = mcd(num, den);
+            return `${num/m}/${den/m}`;
+        }
+
+        // ---------- PORCENTAJES ----------
+        function porcentajes(grade) {
+            const p = rand(5, 50) * 2;
+            const total = rand(20, 200);
             const answer = (p * total) / 100;
             const text = `¿Cuánto es el ${p}% de ${total}?`;
-            if (type === 'multiple') {
-                const opts = [answer, answer + 1, answer - 1, answer + 2].map(String);
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `${p}% de ${total} = ${answer}` };
-            }
-            return { type: 'open', text, answer: String(answer), explanation: `${p}% de ${total} = ${answer}` };
+            const options = generarOpciones(answer, !Number.isInteger(answer));
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `${p}% de ${total} = ${answer}` };
         }
 
-        function geometriaLocal(type) {
-            const a = Math.floor(Math.random() * 14) + 2;
-            const b = Math.floor(Math.random() * 14) + 2;
-            const tipo = Math.floor(Math.random() * 3);
+        // ---------- GEOMETRÍA ----------
+        function geometria(grade) {
+            const a = rand(2, 15), b = rand(2, 15);
+            const tipo = rand(0, 3);
             let text, answer;
             if (tipo === 0) { text = `Área de un rectángulo de ${a} cm × ${b} cm`; answer = a * b; }
             else if (tipo === 1) { text = `Perímetro de un rectángulo de ${a} cm × ${b} cm`; answer = 2 * (a + b); }
-            else { text = `Área de un triángulo con base ${a} cm y altura ${b} cm`; answer = (a * b) / 2; }
-            if (type === 'multiple') {
-                const opts = [answer, answer + 2, answer - 2, answer * 2].map(String);
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `= ${answer}` };
-            }
-            return { type: 'open', text, answer: String(answer), explanation: `= ${answer}` };
+            else if (tipo === 2) { text = `Área de un triángulo con base ${a} cm y altura ${b} cm`; answer = (a * b) / 2; }
+            else { text = `Volumen de un prisma ${a} × ${b} × 3 cm`; answer = a * b * 3; }
+            const options = generarOpciones(answer, !Number.isInteger(answer));
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `Resultado = ${answer}` };
         }
 
-        function funcionLocal(type) {
-            const a = Math.floor(Math.random() * 5) + 1;
-            const b = Math.floor(Math.random() * 11) - 5;
-            const x = Math.floor(Math.random() * 8) - 3;
-            const y = a * x + b;
-            const text = `Si f(x) = ${a}x ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}, ¿cuánto vale f(${x})?`;
-            if (type === 'multiple') {
-                const opts = [y, y + 1, y - 1, y + 2].map(String);
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `f(${x}) = ${y}` };
-            }
-            return { type: 'open', text, answer: String(y), explanation: `f(${x}) = ${y}` };
+        // ---------- PROPORCIONES ----------
+        function proporciones(grade) {
+            let a, b, x, answer;
+            do { a = rand(2, 10); b = rand(2, 10); x = rand(2, 10); answer = (x * b) / a; } while (!Number.isInteger(answer));
+            const text = `Si ${a} es a ${b}, ¿cuánto es a ${x}?`;
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `Resultado = ${answer}` };
         }
 
-        function sumaRestaLocal(grade, type) {
-            const a = Math.floor(Math.random() * (20 + grade * 5)) + 1;
-            const b = Math.floor(Math.random() * (20 + grade * 5)) + 1;
+        // ---------- MULTIPLICACIÓN / DIVISIÓN ----------
+        function multiplicacionDivision(grade) {
+            const esMul = Math.random() > 0.5;
+            if (esMul) {
+                const a = rand(2, 12), b = rand(2, 12);
+                const text = `${a} × ${b} = ?`;
+                const answer = a * b;
+                const options = generarOpciones(answer);
+                return { text, options, correctIndex: options.indexOf(answer), explanation: `= ${answer}` };
+            } else {
+                const b = rand(2, 12), answer = rand(2, 12);
+                const a = b * answer;
+                const text = `${a} ÷ ${b} = ?`;
+                const options = generarOpciones(answer);
+                return { text, options, correctIndex: options.indexOf(answer), explanation: `= ${answer}` };
+            }
+        }
+
+        // ---------- SUMA / RESTA ----------
+        function sumaResta(grade) {
             const esSuma = Math.random() > 0.5;
+            const a = rand(1, 20 + grade * 5), b = rand(1, 20 + grade * 5);
             let text, answer;
             if (esSuma) { text = `${a} + ${b} = ?`; answer = a + b; }
             else { const [x, y] = a > b ? [a, b] : [b, a]; text = `${x} - ${y} = ?`; answer = x - y; }
-            if (type === 'multiple') {
-                const opts = [answer, answer + 1, answer - 1, answer + 2].map(String);
-                return { type: 'multiple', text, options: opts, correctIndex: 0, explanation: `= ${answer}` };
-            }
-            return { type: 'open', text, answer: String(answer), explanation: `= ${answer}` };
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `= ${answer}` };
+        }
+
+        // ---------- DECIMALES ----------
+        function decimales(grade) {
+            const a = Math.round((Math.random() * 10 + 1) * 10) / 10;
+            const b = Math.round((Math.random() * 10 + 1) * 10) / 10;
+            const text = `${a} + ${b} = ?`;
+            const answer = Math.round((a + b) * 100) / 100;
+            const options = generarOpciones(answer, true);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `= ${answer}` };
+        }
+
+        // ---------- NÚMEROS ENTEROS ----------
+        function numerosEnteros(grade) {
+            const a = rand(-15, 15), b = rand(-15, 15);
+            const esSuma = Math.random() > 0.5;
+            let text, answer;
+            if (esSuma) { text = `(${a}) + (${b}) = ?`; answer = a + b; }
+            else { text = `(${a}) - (${b}) = ?`; answer = a - b; }
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `= ${answer}` };
+        }
+
+        // ---------- ESTADÍSTICA ----------
+        function estadistica(grade) {
+            const nums = [];
+            for (let i = 0; i < 5; i++) nums.push(rand(1, 20));
+            const suma = nums.reduce((a, b) => a + b, 0);
+            const prom = Math.round((suma / nums.length) * 100) / 100;
+            const text = `Calcula la media de: ${nums.join(', ')}`;
+            const options = generarOpciones(prom, true);
+            return { text, options, correctIndex: options.indexOf(prom), explanation: `Media = ${prom}` };
+        }
+
+        // ---------- SUCESIONES ----------
+        function sucesiones(grade) {
+            const diff = rand(2, 8), first = rand(1, 15);
+            const seq = [first, first+diff, first+2*diff, first+3*diff, first+4*diff];
+            const missing = rand(1, 3);
+            const answer = seq[missing];
+            const display = seq.map((v, i) => i === missing ? '?' : v).join(', ');
+            const text = `Encuentra el número que falta: ${display}`;
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `Falta ${answer}` };
+        }
+
+        // ---------- MEDIDAS ----------
+        function medidas(grade) {
+            const m = rand(1, 10);
+            const text = `¿Cuántos centímetros hay en ${m} metros?`;
+            const answer = m * 100;
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `${m} m = ${answer} cm` };
+        }
+
+        // ---------- FORMAS ----------
+        function formas(grade) {
+            const formas = ['triángulo', 'cuadrado', 'círculo', 'rectángulo', 'pentágono', 'hexágono'];
+            const lados = { 'triángulo': 3, 'cuadrado': 4, 'círculo': 0, 'rectángulo': 4, 'pentágono': 5, 'hexágono': 6 };
+            const forma = formas[rand(0, formas.length - 1)];
+            const text = `¿Cuántos lados tiene un ${forma}?`;
+            const answer = lados[forma];
+            const options = generarOpciones(answer);
+            return { text, options, correctIndex: options.indexOf(answer), explanation: `${answer} lados` };
+        }
+
+        // ---------- CÁLCULO ----------
+        function calculo(grade) {
+            const a = rand(1, 5), b = rand(1, 10), c = rand(1, 10);
+            const text = `Deriva: f(x) = ${a}x² + ${b}x + ${c}`;
+            const answer = `${2*a}x + ${b}`;
+            const options = new Set([answer]);
+            while (options.size < 4) options.add(`${rand(1,10)}x + ${rand(1,10)}`);
+            const arr = Array.from(options).sort(() => Math.random() - 0.5);
+            return { text, options: arr, correctIndex: arr.indexOf(answer), explanation: `f'(x) = ${answer}` };
         }
 
         // ============================================================
@@ -1106,13 +955,8 @@ Ejemplo para type "open":
         function getPos(e) {
             const rect = canvas.getBoundingClientRect();
             let clientX, clientY;
-            if (e.touches && e.touches.length > 0) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
+            if (e.touches && e.touches.length > 0) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+            else { clientX = e.clientX; clientY = e.clientY; }
             return { x: clientX - rect.left, y: clientY - rect.top };
         }
 
@@ -1120,8 +964,7 @@ Ejemplo para type "open":
             e.preventDefault();
             drawing = true;
             const pos = getPos(e);
-            lastX = pos.x;
-            lastY = pos.y;
+            lastX = pos.x; lastY = pos.y;
             ctx.beginPath();
             ctx.arc(lastX, lastY, currentTool === 'pen' ? 1.5 : 11, 0, Math.PI * 2);
             ctx.fillStyle = currentTool === 'pen' ? '#1a202c' : '#ffffff';
@@ -1138,16 +981,10 @@ Ejemplo para type "open":
             ctx.strokeStyle = currentTool === 'pen' ? '#1a202c' : '#ffffff';
             ctx.lineWidth = currentTool === 'pen' ? 2.5 : 22;
             ctx.stroke();
-            lastX = pos.x;
-            lastY = pos.y;
+            lastX = pos.x; lastY = pos.y;
         }
 
-        function stopDrawing(e) {
-            if (drawing) {
-                e.preventDefault();
-                drawing = false;
-            }
-        }
+        function stopDrawing(e) { if (drawing) { e.preventDefault(); drawing = false; } }
 
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
@@ -1164,9 +1001,7 @@ Ejemplo para type "open":
             document.getElementById('toolEraser').classList.toggle('active', tool === 'eraser');
         }
 
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
         // ============================================================
         // INICIO
